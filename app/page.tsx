@@ -1,101 +1,120 @@
+"use client";
+
+import "./globals.css";
+import img from "../app/img/musicHero.jpg";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { authParameters } from "./lib/spotifyCredentials";
+import axios from "axios";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [accessToken, setAccesstoken] = useState("");
+  const [top100, setTop100] = useState([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // Function to get accessToken
+    fetch("https://accounts.spotify.com/api/token", authParameters)
+      .then((result) => result.json())
+      .then((data) => setAccesstoken(data.access_token));
+  }, []);
+
+  useEffect(() => {
+    const afrobeatParam = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    // 1. Get Top 100 Nigeria songs ID
+    const getAfrobeatPlaylist = async () => {
+      var top100ID = await fetch(
+        "https://api.spotify.com/v1/search?q=top100nigeria&type=playlist&limit=50",
+        afrobeatParam
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return data.playlists.items[2].id;
+        });
+      // console.log(top100ID);
+
+      // 2. Use the ID to get all the songs in the playlists
+      var allPlayLists = await fetch(
+        `https://api.spotify.com/v1/playlists/${top100ID}/tracks?offset=${0}&limit=${100}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (accessToken) {
+            console.log(data.items);
+            setTop100(data.items);
+          }
+        });
+    };
+    getAfrobeatPlaylist();
+  }, [accessToken]);
+
+  return (
+    <div className="">
+      <div className="relative min-h-[30vh] md:min-h-[55vh]  w-full flex justify-start items-center p-8 ">
+        <div className="w-full absolute -z-10">
+          <Image
+            src={img}
+            alt="djdhdh"
+            // objectFit="cover"
+            quality={100}
+            priority
+            className="w-full h-full block"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="mt-20 md:max-w-[50%]">
+          <section className="text-2xl lg:text-5xl font-semibold ">
+            <h2>
+              All the <span className="text-secondary">Best Songs</span>{" "}
+            </h2>
+            <h2 className="mt-2">
+              in one <span className="text-primary">Place</span>
+            </h2>
+          </section>
+          <section className="mt-8">
+            <p>
+              On our website you can access an amazing collection of popular and
+              new songs. Stream your favorite tracks in high quality and enjoy
+              without interruptions. Whatever your tatse in music we have it all
+              for you
+            </p>
+          </section>
+        </div>
+      </div>
+
+      {/* <div className="">
+        <h2>Home</h2>
+        <h2>
+          {accessToken
+            ? `Access token is ${accessToken}`
+            : "Access token is empty"}
+        </h2>
+       
+      </div> */}
+      <div>
+        {top100.map((song,ind) => {
+          console.log(song);
+          return (
+            <div key={ind} className="bg-secondary mt-4 flex items-center gap-3 p-4">
+              <h2>#{ind + 1}</h2>
+              <div>
+                <h2>{song?.track.name}</h2>
+                <p>{song?.track.artists[0].name} </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
