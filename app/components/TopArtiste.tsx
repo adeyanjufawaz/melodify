@@ -19,8 +19,10 @@ export default function TopArtiste() {
       .then((res) => res.json())
       .then((data) => {
         //   setTopArtists(data?.artists?.items);
+        console.log(data.artists.items);
         const sortedArtists = data.artists.items.sort(
-          (a: any, b: any) => b.followers.total - a.followers.total
+          (a: SpotifyArtist, b: SpotifyArtist) =>
+            b.followers.total - a.followers.total
         );
         //   console.log(sortedArtists);
         setTopArtists(sortedArtists)

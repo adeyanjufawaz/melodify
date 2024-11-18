@@ -1,12 +1,21 @@
-"use client"
-import Player from "./Player";
+// "use client"
+// import Player from "./Player";
 
-let accessToken = localStorage.getItem("accessToken")
-let trackUri = localStorage.getItem("songUri")
+// const accessToken:string = localStorage.getItem("accessToken") || "";
+// const trackUri:string = localStorage.getItem("songUri") || ""
+// export default function Footer() {
+//   return (
+//     <div className="bg-indigo-950 w-full sticky bottom-0">
+//       <Player accessToken={accessToken} trackUri={trackUri} />
+//     </div>
+//   );
+// }
+
+import React from 'react'
+
 export default function Footer() {
   return (
-    <div className="bg-indigo-950 w-full sticky bottom-0">
-      <Player accessToken={accessToken} trackUri={trackUri} />
-    </div>
-  );
+    <div>Footer</div>
+  )
 }
+
