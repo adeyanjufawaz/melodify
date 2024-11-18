@@ -23,7 +23,7 @@ export default function TopArtiste() {
           (a: any, b: any) => b.followers.total - a.followers.total
         );
         //   console.log(sortedArtists);
-        setTopArtists(sortedArtists);
+        setTopArtists(sortedArtists)
       });
   };
 
