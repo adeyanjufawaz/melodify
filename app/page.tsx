@@ -6,23 +6,27 @@ import { useEffect, useState } from "react";
 import { authParameters } from "./lib/spotifyCredentials";
 import TopSongSkeleton from "./components/skeleton/TopSongSkeleton";
 import TopArtiste from "./components/TopArtiste";
+import useLocalStorage from "./hooks/localStorage";
 
 export default function Home() {
-  const accessToken = localStorage?.getItem("accessToken");
+  // const accessToken = localStorage?.getItem("accessToken");
   // Top songs
   const [top100, setTop100] = useState([]);
   const [topSongsIsLoading, setTopSongsIsloading] = useState(true);
-
+  const [accessToken, setAccesstoken] = useLocalStorage<string>(
+    "accessToken",
+    ""
+  );
 
   useEffect(() => {
     // Function to get accessToken
     fetch("https://accounts.spotify.com/api/token", authParameters)
       .then((result) => result.json())
       .then((data) => {
-        // setAccesstoken(data.access_token)
-        localStorage.setItem("accessToken", data.access_token);
+        // const setData = localStorage?.setItem("accessToken", );
+        setAccesstoken(data.access_token);
       });
-  }, []);
+  }, [setAccesstoken]);
 
   useEffect(() => {
     const afrobeatParam = {
@@ -120,8 +124,8 @@ export default function Home() {
 
               return (
                 <motion.div
-                  initial={{ y: 30, opacity: 0, scale: 0.8 }}
-                  whileInView={{ y: 0, opacity: 1, scale: 1 }}
+                  initial={{  opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6 }}
                   key={ind}
                   className="rounded-md bg-secondary text-white flex flex-wrap items-center gap-6 w-3/4 mx-auto px-6 py-1"

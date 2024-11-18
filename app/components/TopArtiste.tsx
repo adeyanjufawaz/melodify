@@ -1,11 +1,17 @@
+"use client"
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import useLocalStorage from "../hooks/localStorage";
 
 export default function TopArtiste() {
   const [topArtists, setTopArtists] = useState([]);
-  const accessToken = localStorage.getItem("accessToken");
+  const [accessToken] = useLocalStorage<string>(
+    "accessToken",
+    ""
+  );
+
 
   const getPopularArtiste = async () => {
     await fetch(
@@ -28,7 +34,6 @@ export default function TopArtiste() {
         setTopArtists(sortedArtists)
       });
   };
-
   useEffect(() => {
     getPopularArtiste();
   },[]);
