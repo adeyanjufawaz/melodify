@@ -15,3 +15,8 @@ body {
   font-family: "Open Sans", serif;
   overflow-x: hidden;
 }
+.hero{
+    background-image: url("/musicHero.jpg");
+    background-size: cover;
+    background-position: center;
+}

@@ -8,12 +8,10 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        
-      },
+      backgroundImage: {},
       colors: {
-        primary: "#118ab2",
-        secondary: "#ef476f",
+        primary: "#9b42c0",
+        secondary: "#ffc857",
       },
     },
   },

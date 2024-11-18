@@ -3,7 +3,7 @@
 export default function Navbar() {
   return (
     <div>
-      <nav className="fixed w-full bg-primary h-16 p-4 flex items-center justify-between">
+      <nav className="fixed w-full z-50 opacity-85 bg-primary h-16 p-4 flex items-center justify-between">
         <div>
           <h1 className="uppercase font-semibold">Melodify</h1>
         </div>
