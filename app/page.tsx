@@ -2,21 +2,14 @@
 
 import "./globals.css";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { authParameters } from "./lib/spotifyCredentials";
-import TopSongSkeleton from "./components/skeleton/TopSongSkeleton";
 import TopArtiste from "./components/TopArtiste";
 import useLocalStorage from "./hooks/localStorage";
+import TopSongs from "./components/TopSongs";
 
 export default function Home() {
-  // const accessToken = localStorage?.getItem("accessToken");
-  // Top songs
-  const [top100, setTop100] = useState([]);
-  const [topSongsIsLoading, setTopSongsIsloading] = useState(true);
-  const [accessToken, setAccesstoken] = useLocalStorage<string>(
-    "accessToken",
-    ""
-  );
+  const [, setAccesstoken] = useLocalStorage<string>("accessToken", "");
 
   useEffect(() => {
     // Function to get accessToken
@@ -26,52 +19,7 @@ export default function Home() {
         // const setData = localStorage?.setItem("accessToken", );
         setAccesstoken(data.access_token);
       });
-  }, [setAccesstoken]);
-
-  useEffect(() => {
-    const afrobeatParam = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-
-    // 1. Get Top 100 Nigeria songs ID
-    const getAfrobeatPlaylist = async () => {
-      const top100ID = await fetch(
-        "https://api.spotify.com/v1/search?q=top100nigeria&type=playlist&limit=50",
-        afrobeatParam
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          return data?.playlists?.items[2]?.id;
-        });
-
-      // 2. Use the ID to get all the songs in the playlists
-      await fetch(
-        `https://api.spotify.com/v1/playlists/${top100ID}/tracks?offset=${0}&limit=${10}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (accessToken) {
-            setTop100(data?.items);
-            setTopSongsIsloading(false);
-          }
-        });
-    };
-    getAfrobeatPlaylist();
-  }, [accessToken]);
-
-  const playSong = (uri: string) => {
-    console.log(uri);
-    localStorage.setItem("songUri", uri);
-  };
+  }, []);
 
   return (
     <div className="bg-[url('/transparent.svg')]">
@@ -110,42 +58,8 @@ export default function Home() {
         <h2 className="text-2xl my-8 uppercase text-center font-bold text-white">
           Top 10 Naija
         </h2>
-        {topSongsIsLoading ? (
-          <TopSongSkeleton />
-        ) : (
-          <div className="grid gap-4">
-            {top100?.map((song, ind) => {
-              // Destructuring individual song
-              const {
-                track: { name, artists, uri },
-              } = song;
-              // Destructuring Artistdetails
-              const [{ name: name1 }]: { name: string }[] = artists;
 
-              return (
-                <motion.div
-                  initial={{  opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                  key={ind}
-                  className="rounded-md bg-secondary text-white flex flex-wrap items-center gap-6 w-3/4 mx-auto px-6 py-1"
-                  onClick={() => playSong(uri)}
-                >
-                  <h2 className="font-semibold text-black">{ind + 1}. </h2>
-                  <div>
-                    <h2 className=" max-w-[100px] md:max-w-full truncate text-black text-sm font-bold capitalize">
-                      {name}
-                    </h2>
-                    <p className="text-sm text-gray-800">
-                      {" "}
-                      <span className=" font-bold">Artist:</span> {name1}{" "}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
+        <TopSongs />
       </div>
 
       {/* Top Artists */}

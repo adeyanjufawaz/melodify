@@ -7,7 +7,7 @@ import useLocalStorage from "../hooks/localStorage";
 
 export default function TopArtiste() {
   const [topArtists, setTopArtists] = useState([]);
-  const [accessToken] = useLocalStorage<string>(
+  const [accessToken,setAccesstoken] = useLocalStorage<string>(
     "accessToken",
     ""
   );
@@ -15,7 +15,7 @@ export default function TopArtiste() {
 
   const getPopularArtiste = async () => {
     await fetch(
-      `https://api.spotify.com/v1/search?q=afropop&type=artist&market=NG&limit=50`,
+      `https://api.spotify.com/v1/search?q=afropop&type=artist&market=NG&limit=25`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -24,16 +24,14 @@ export default function TopArtiste() {
     )
       .then((res) => res.json())
       .then((data) => {
-        //   setTopArtists(data?.artists?.items);
-        console.log(data.artists.items);
         const sortedArtists = data.artists.items.sort(
           (a: SpotifyArtist, b: SpotifyArtist) =>
             b.followers.total - a.followers.total
         );
-        //   console.log(sortedArtists);
         setTopArtists(sortedArtists)
       });
-  };
+  }
+
   useEffect(() => {
     getPopularArtiste();
   },[]);
@@ -41,7 +39,6 @@ export default function TopArtiste() {
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
       {topArtists?.map((artist) => {
-        // console.log(artist);
         const { name, id, images } = artist;
         const [{ url: firstImageUrl }]: { url: string }[] = images;
         return (

@@ -20,3 +20,6 @@ body {
     background-size: cover;
     background-position: center;
 }
+.gradient{
+  background: linear-gradient(to right, #ffc857, #BC7C7C, #9b42c0);
+}
