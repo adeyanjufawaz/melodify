@@ -7,7 +7,7 @@ import useLocalStorage from "../hooks/localStorage";
 
 export default function TopArtiste() {
   const [topArtists, setTopArtists] = useState([]);
-  const [accessToken,setAccesstoken] = useLocalStorage<string>(
+  const [accessToken] = useLocalStorage<string>(
     "accessToken",
     ""
   );
