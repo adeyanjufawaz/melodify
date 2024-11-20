@@ -28,7 +28,7 @@ export default function Home() {
         initial={{ y: -30, opacity: 0, scale: 0.3 }}
         whileInView={{ y: 0, opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative bg-[url('/transparent.svg')] w-full flex justify-center  items-center px-8 py-6 "
+        className="relative bg-[url('/transparent.svg')] w-full flex justify-center  items-center px-2 md:px-8 py-6 "
       >
         <div className="hero w-full mt-8 h-[50vh] lg:h-[80vh] flex justify-start items-center">
           <div className="w-full md:w-[50%]">

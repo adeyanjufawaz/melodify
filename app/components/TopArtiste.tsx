@@ -48,16 +48,16 @@ export default function TopArtiste() {
               whileInView={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="bg-gray-600 h-28 w-28 rounded-full  ">
+              <div className="bg-gray-600 h-16 w-16 md:h-28 md:w-28 rounded-full  ">
                 <Image
                   src={firstImageUrl}
                   width={100}
                   height={100}
-                  className="rounded-full border-2 border-secondary border-double h-28 w-28"
+                  className="rounded-full border-2 border-secondary border-double h-16 w-16 md:h-28  md:w-28"
                   alt="Artist image"
                 />
               </div>
-              <h2 className="mt-2 text-center">{name}</h2>
+              <h2 className="mt-2 text-sm truncate w-20 mx-auto text-center">{name}</h2>
             </motion.div>
           </Link>
         );

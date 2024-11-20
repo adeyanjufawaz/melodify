@@ -64,7 +64,7 @@ export default function TopSongs() {
                 whileInView={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 key={ind}
-                className="rounded-md gradient text-white flex flex-wrap items-center gap-6 w-3/4 mx-auto px-6 py-1"
+                className="rounded-md gradient text-white flex flex-wrap items-center gap-6 w-[90%] mx-auto px-6 py-1"
               >
                 <h2 className="font-semibold text-black">{ind + 1}. </h2>
                 <div>
