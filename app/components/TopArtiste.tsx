@@ -24,9 +24,9 @@ export default function TopArtiste() {
     )
       .then((res) => res.json())
       .then((data) => {
-        const sortedArtists = data.artists.items.sort(
+        const sortedArtists = data?.artists?.items.sort(
           (a: SpotifyArtist, b: SpotifyArtist) =>
-            b.followers.total - a.followers.total
+            b?.followers?.total - a?.followers?.total
         );
         setTopArtists(sortedArtists)
       });
@@ -38,7 +38,7 @@ export default function TopArtiste() {
 
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
-      {topArtists?.map((artist) => {
+      {topArtists.map((artist) => {
         const { name, id, images } = artist;
         const [{ url: firstImageUrl }]: { url: string }[] = images;
         return (

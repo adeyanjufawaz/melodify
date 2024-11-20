@@ -50,7 +50,7 @@ export default function TopSongs() {
         <TopSongSkeleton />
       ) : (
         <div className="grid gap-4">
-          {topSongs?.map((song, ind) => {
+          {topSongs.map((song, ind) => {
             // Destructuring individual song
             const {
               track: { name, artists,},
