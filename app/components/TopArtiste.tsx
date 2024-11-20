@@ -1,17 +1,15 @@
-"use client"
+"use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import useLocalStorage from "../hooks/localStorage";
+import TopArtsistSkeleton from "./skeleton/TopArtsistSkeleton";
 
 export default function TopArtiste() {
   const [topArtists, setTopArtists] = useState([]);
-  const [accessToken] = useLocalStorage<string>(
-    "accessToken",
-    ""
-  );
-
+  const [isLoading, setIsloading] = useState<boolean>(true);
+  const [accessToken] = useLocalStorage<string>("accessToken", "");
 
   const getPopularArtiste = async () => {
     await fetch(
@@ -28,13 +26,18 @@ export default function TopArtiste() {
           (a: SpotifyArtist, b: SpotifyArtist) =>
             b?.followers?.total - a?.followers?.total
         );
-        setTopArtists(sortedArtists)
+        setTopArtists(sortedArtists);
+        setIsloading(false)
       });
-  }
+  };
 
   useEffect(() => {
     getPopularArtiste();
-  },[]);
+  }, [])
+
+  if (isLoading) {
+    return (<TopArtsistSkeleton/>)
+  }
 
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
@@ -57,7 +60,9 @@ export default function TopArtiste() {
                   alt="Artist image"
                 />
               </div>
-              <h2 className="mt-2 text-sm truncate w-20 mx-auto text-center">{name}</h2>
+              <h2 className="mt-2 text-sm truncate w-20 mx-auto text-center">
+                {name}
+              </h2>
             </motion.div>
           </Link>
         );
