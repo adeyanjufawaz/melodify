@@ -38,11 +38,9 @@ export default function UserPage() {
           const followers = data.followers.total;
           const image = data.images[0].url;
           const artistInfo = { name, followers, image };
-          console.log(data);
           setArtisitInfo(artistInfo);
           setArtistInfoIsLoading(false);
         });
-      //   const {followers: { total },name,images} = artistData;
     };
     getArtistInfo();
 
@@ -59,7 +57,6 @@ export default function UserPage() {
         .then((res) => res.json())
         .then((data) => {
           const tracks = data.tracks.map((cur: SpotifyTrack) => cur);
-          console.log(tracks);
           setArtisitTracks(tracks.slice(0,5));
           setartistTracksIsLoading(false);
         });
@@ -80,7 +77,6 @@ export default function UserPage() {
         .then((data) => {
           setrelatedArtistsIsLoading(false);
           setRelatedArtists(data?.artists.slice(0,15));
-          // console.log(data?.artists);
         });
     };
     getReltedArtist();
@@ -103,21 +99,21 @@ export default function UserPage() {
         transition={{ duration: 0.6 }}
         className="opacity-75 w-full"
       >
-        <div className="flex p-4 justify-start bg-primary gap-10 items-center">
+        <div className="flex p-4 justify-start bg-primary gap-4 md:gap-10 items-center">
           <Image
             src={artistInfo?.image}
             alt="Artiste image"
             width={100}
             height={100}
             priority={true}
-            className="h-48 w-48 border-secondary  rounded-md border-4 border-double p-2 "
+            className="h-32 w-32 md:h-48 md:w-48 border-secondary  rounded-md border-4 border-double p-2 "
           />
 
-          <div className="flex flex-col gap-4">
-            <h1 className="text-4xl text-secondary font-extrabold">
+          <div className="flex flex-col gap-2 md:gap-4">
+            <h1 className="text-xl md:text-4xl max-w-44 md:max-w-full truncate text-secondary font-extrabold">
               {artistInfo.name}
             </h1>
-            <h2 className="text-xl font-bold">
+            <h2 className="text-lg md:text-xl font-bold">
               {artistInfo.followers.toLocaleString()} followers
             </h2>
           </div>
@@ -167,7 +163,7 @@ export default function UserPage() {
       {/* Related Artists */}
       <section className="mt-6 p-6 ">
         <h2 className="text-2xl text-white font-extrabold">Fans Also Like </h2>
-        <div className="flex flex-wrap justify-center gap-6 p-6">
+        <div className="mt-6 flex flex-wrap justify-center gap-6">
           {relatedArtists &&
             relatedArtists.map((artist) => {
               const { name, id, images } = artist;
