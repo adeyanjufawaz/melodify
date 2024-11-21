@@ -11,14 +11,17 @@ import TopSongs from "./components/TopSongs";
 export default function Home() {
   const [, setAccesstoken] = useLocalStorage<string>("accessToken", "");
 
-  useEffect(() => {
     // Function to get accessToken
-    fetch("https://accounts.spotify.com/api/token", authParameters)
-      .then((result) => result.json())
-      .then((data) => {
-        // const setData = localStorage?.setItem("accessToken", );
-        setAccesstoken(data.access_token);
-      });
+    function getaccess() {
+      fetch("https://accounts.spotify.com/api/token", authParameters)
+        .then((result) => result.json())
+        .then((data) => {
+          // const setData = localStorage?.setItem("accessToken", );
+          setAccesstoken(data.access_token);
+        });
+    }
+  useEffect(() => {
+    getaccess()
   }, []);
 
   return (
@@ -30,19 +33,19 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="relative bg-[url('/transparent.svg')] w-full flex justify-center  items-center px-2 md:px-8 py-6 "
       >
-        <div className="hero w-full mt-8 h-[50vh] lg:h-[80vh] flex justify-start items-center">
+        <div className="hero p-4 w-full mt-8 h-[50vh] lg:h-[80vh] flex justify-start items-center">
           <div className="w-full md:w-[50%]">
-            <section className="text-2xl lg:text-5xl font-semibold ">
+            <section className="text-xl lg:text-5xl font-semibold ">
               <h2>
                 All the <span className="text-secondary">Best Songs</span>{" "}
               </h2>
-              <h2 className="mt-2">
+              <h2 className="mt-1">
                 in one <span className="text-primary">Place</span>
               </h2>
             </section>
 
-            <section className="mt-8">
-              <p className="text-xl">
+            <section className="mt-1 md:mt-8 p-4">
+              <p className="text-sm lg:text-xl">
                 On our website you can access an amazing collection of popular
                 and new songs. Stream your favorite tracks in high quality and
                 enjoy without interruptions. Whatever your tatse in music we
