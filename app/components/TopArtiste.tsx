@@ -41,7 +41,7 @@ export default function TopArtiste() {
 
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
-      {topArtists.map((artist) => {
+      {topArtists && topArtists.map((artist) => {
         const { name, id, images } = artist;
         const [{ url: firstImageUrl }]: { url: string }[] = images;
         return (
