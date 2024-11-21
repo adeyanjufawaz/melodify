@@ -33,7 +33,7 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="relative bg-[url('/transparent.svg')] w-full flex justify-center  items-center px-2 md:px-8 py-6 "
       >
-        <div className="hero p-4 w-full mt-8 h-[50vh] lg:h-[80vh] flex justify-start items-center">
+        <div className="hero p-3 w-full mt-8 h-[50vh] lg:h-[80vh] flex justify-start items-center">
           <div className="w-full md:w-[50%]">
             <section className="text-xl lg:text-5xl font-semibold ">
               <h2>
@@ -44,8 +44,8 @@ export default function Home() {
               </h2>
             </section>
 
-            <section className="mt-1 md:mt-8 p-4">
-              <p className="text-sm lg:text-xl">
+            <section className="mt-1 md:mt-8 p-3">
+              <p className="text-base lg:text-xl">
                 On our website you can access an amazing collection of popular
                 and new songs. Stream your favorite tracks in high quality and
                 enjoy without interruptions. Whatever your tatse in music we
