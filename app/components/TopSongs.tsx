@@ -6,7 +6,7 @@ import TopSongSkeleton from "./skeleton/TopSongSkeleton";
 import useLocalStorage from "../hooks/localStorage";
 
 export default function TopSongs() {
-  const [topSongsIsLoading, setTopSongsIsLoading] = useState<boolean>(true);
+  const [, setTopSongsIsLoading] = useState<boolean>(true);
   const [topSongs, setTopSongs] = useState([]);
   const [accessToken, ] = useLocalStorage<string>(
     "accessToken",
