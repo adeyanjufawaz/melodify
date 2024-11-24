@@ -11,17 +11,17 @@ import TopSongs from "./components/TopSongs";
 export default function Home() {
   const [, setAccesstoken] = useLocalStorage<string>("accessToken", "");
 
-    // Function to get accessToken
-    function getaccess() {
-      fetch("https://accounts.spotify.com/api/token", authParameters)
-        .then((result) => result.json())
-        .then((data) => {
-          // const setData = localStorage?.setItem("accessToken", );
-          setAccesstoken(data.access_token);
-        });
-    }
+  // Function to get accessToken
+  function getaccess() {
+    fetch("https://accounts.spotify.com/api/token", authParameters)
+      .then((result) => result.json())
+      .then((data) => {
+        // const setData = localStorage?.setItem("accessToken", );
+        setAccesstoken(data.access_token);
+      });
+  }
   useEffect(() => {
-    getaccess()
+    getaccess();
   }, []);
 
   return (

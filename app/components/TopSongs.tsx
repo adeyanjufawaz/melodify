@@ -35,7 +35,7 @@ export default function TopSongs() {
 
       const playlistData = await playlistResponse.json();
       const topSongs = playlistData?.tracks?.items?.slice(0, 10); // Get top 10 songs
-
+      console.log(topSongs)
       setTopSongs(topSongs);
       setTopSongsIsLoading(false);
     }
@@ -45,15 +45,13 @@ export default function TopSongs() {
   }, []);
 
   return (
-    <div>
-      {topSongsIsLoading ? (
-        <TopSongSkeleton />
-      ) : (
+    <>
+      {topSongs.length > 0 ? (
         <div className="grid gap-4">
-          {topSongs && topSongs.map((song, ind) => {
+          {topSongs.map((song, ind) => {
             // Destructuring individual song
             const {
-              track: { name, artists,},
+              track: { name, artists },
             } = song;
             // Destructuring Artistdetails
             const [{ name: name1 }]: { name: string }[] = artists;
@@ -80,7 +78,9 @@ export default function TopSongs() {
             );
           })}
         </div>
+      ) : (
+        <TopSongSkeleton />
       )}
-    </div>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import "../../globals.css";
@@ -126,8 +127,7 @@ export default function UserPage() {
       <section className="mt-6 p-6">
         <div className="grid gap-4">
           <h2 className="text-3xl text-white font-extrabold">Top Tracks</h2>
-          {artistTracks &&
-            artistTracks.map((song, ind) => {
+          {artistTracks.map((song, ind) => {
               const { name, duration_ms: duration, artists } = song;
               const [{ name: name1 }]: { name: string }[] = artists;
 
