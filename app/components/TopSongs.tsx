@@ -59,6 +59,7 @@ export default function TopSongs() {
             return (
               <motion.div
                 initial={{ y: 30, opacity: 0, scale: 0.8 }}
+                
                 whileInView={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 key={ind}
