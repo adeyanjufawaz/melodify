@@ -3,8 +3,11 @@ export default function TopSongSkeleton() {
   return (
     <div className="text-center">
       <div>
-        <span className="font-bold text-lg"> If it takes too long to display </span>
-
+        <span className="font-bold text-lg">
+          {" "}
+          If it takes too long to display{" "}
+        </span>
+        <h1>Refresh this page</h1>
         <h2>
           Spotify API, impose rate limits to prevent excessive usage, ensure
           fair access for all users, and protect their infrastructure{" "}
