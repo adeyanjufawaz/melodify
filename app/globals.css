@@ -6,10 +6,10 @@
 
 
 body {
-  color: var(--foreground);
-  scroll-behavior: smooth;
   margin: 0;
   padding: 0;
+  color: var(--foreground);
+  scroll-behavior: smooth;
   box-sizing: border-box;
   background: black;
   color: aliceblue;

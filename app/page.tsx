@@ -59,7 +59,7 @@ export default function Home() {
       {/* Top 20 Songs */}
       <div className="p-6 bg-[url('/transparent.svg')]">
         <h2 className="text-2xl my-8 uppercase text-center font-bold text-white">
-          Top 10 Naija
+          Top 20 Naija
         </h2>
 
         <TopSongs />

@@ -58,7 +58,7 @@ export default function UserPage() {
         .then((res) => res.json())
         .then((data) => {
           const tracks = data.tracks.map((cur: SpotifyTrack) => cur);
-          setArtisitTracks(tracks.slice(0,5));
+          setArtisitTracks(tracks.slice(0, 5));
           setartistTracksIsLoading(false);
         });
     };
@@ -77,7 +77,6 @@ export default function UserPage() {
         .then((res) => res.json())
         .then((data) => {
           setrelatedArtistsIsLoading(false);
-          setRelatedArtists(data?.artists.slice(0,15));
         });
     };
     getReltedArtist();
@@ -128,69 +127,35 @@ export default function UserPage() {
         <div className="grid gap-4">
           <h2 className="text-3xl text-white font-extrabold">Top Tracks</h2>
           {artistTracks.map((song, ind) => {
-              const { name, duration_ms: duration, artists } = song;
-              const [{ name: name1 }]: { name: string }[] = artists;
+            const { name, duration_ms: duration, artists } = song;
+            const [{ name: name1 }]: { name: string }[] = artists;
 
-              return (
-                <motion.div
-                  initial={{ y: 30, opacity: 0, scale: 0.8 }}
-                  whileInView={{ y: 0, opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                  key={ind}
-                  className="rounded-md gradient text-white flex flex-wrap items-center gap-6 w-[90%] mx-auto px-6 py-1"
-                >
-                  <h2 className="font-semibold text-black">{ind + 1}. </h2>
-                  <div>
-                    <h2 className=" max-w-[100px] md:max-w-full truncate text-black text-sm font-bold capitalize">
-                      {name}
-                    </h2>
-                    <p className="text-sm text-gray-800">
-                      {" "}
-                      <span className=" font-bold">Artist:</span> {name1}{" "}
-                    </p>
-                    <p className="text-sm text-gray-800">
-                      {" "}
-                      <span className=" font-bold">Duration:</span>{" "}
-                      {(duration / 60000).toFixed(2)} min{" "}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-        </div>
-      </section>
-
-      {/* Related Artists */}
-      <section className="mt-6 p-6 ">
-        <h2 className="text-2xl text-white font-extrabold">Fans Also Like </h2>
-        <div className="mt-6 flex flex-wrap justify-center gap-6">
-          {relatedArtists &&
-            relatedArtists.map((artist) => {
-              const { name, id, images } = artist;
-              const [{ url: firstImageUrl }]: { url: string }[] = images;
-              return (
-                <Link href={`/artist/${id}`} key={id}>
-                  <motion.div
-                    initial={{ y: -30, opacity: 0, scale: 0.3 }}
-                    whileInView={{ y: 0, opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className="bg-gray-600 h-16 w-16 md:h-28 md:w-28 rounded-full  ">
-                      <Image
-                        src={firstImageUrl}
-                        width={100}
-                        height={100}
-                        className="rounded-full border-2 border-secondary border-double h-16 w-16 md:h-28  md:w-28"
-                        alt="Artist image"
-                      />
-                    </div>
-                    <h2 className="mt-2 text-sm truncate w-20 mx-auto text-center">
-                      {name}
-                    </h2>
-                  </motion.div>
-                </Link>
-              );
-            })}
+            return (
+              <motion.div
+                initial={{ y: 30, opacity: 0, scale: 0.8 }}
+                whileInView={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                key={ind}
+                className="rounded-md gradient text-white flex flex-wrap items-center gap-6 w-[90%] mx-auto px-6 py-1"
+              >
+                <h2 className="font-semibold text-black">{ind + 1}. </h2>
+                <div>
+                  <h2 className=" max-w-[100px] md:max-w-full truncate text-black text-sm font-bold capitalize">
+                    {name}
+                  </h2>
+                  <p className="text-sm text-gray-800">
+                    {" "}
+                    <span className=" font-bold">Artist:</span> {name1}{" "}
+                  </p>
+                  <p className="text-sm text-gray-800">
+                    {" "}
+                    <span className=" font-bold">Duration:</span>{" "}
+                    {(duration / 60000).toFixed(2)} min{" "}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
     </div>

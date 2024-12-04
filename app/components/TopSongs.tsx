@@ -8,13 +8,10 @@ import useLocalStorage from "../hooks/localStorage";
 export default function TopSongs() {
   const [, setTopSongsIsLoading] = useState<boolean>(true);
   const [topSongs, setTopSongs] = useState([]);
-  const [accessToken, ] = useLocalStorage<string>(
-    "accessToken",
-    ""
-  );
+  const [accessToken] = useLocalStorage<string>("accessToken", "");
   const getPopularArtiste = async () => {
     const response = await fetch(
-      `https://api.spotify.com/v1/browse/categories/toplists/playlists?country=Nigeria`,
+      `https://api.spotify.com/v1/search?q=Apple+music&type=playlist`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -22,7 +19,7 @@ export default function TopSongs() {
       }
     );
     const data = await response.json();
-    const playlistId = data?.playlists?.items[3]?.id; // Get first playlist ID
+    const playlistId = data?.playlists?.items[0]?.id; // Get first playlist ID
     if (playlistId) {
       const playlistResponse = await fetch(
         `https://api.spotify.com/v1/playlists/${playlistId}`,
@@ -34,8 +31,7 @@ export default function TopSongs() {
       );
 
       const playlistData = await playlistResponse.json();
-      const topSongs = playlistData?.tracks?.items?.slice(0, 10); // Get top 10 songs
-      console.log(topSongs)
+      const topSongs = playlistData?.tracks?.items?.slice(0, 20); // Get top 10 songs
       setTopSongs(topSongs);
       setTopSongsIsLoading(false);
     }
@@ -48,7 +44,7 @@ export default function TopSongs() {
     <>
       {topSongs.length > 0 ? (
         <div className="grid gap-4">
-          {topSongs.map((song, ind) => {
+          {topSongs?.map((song, ind) => {
             // Destructuring individual song
             const {
               track: { name, artists },
@@ -59,7 +55,6 @@ export default function TopSongs() {
             return (
               <motion.div
                 initial={{ y: 30, opacity: 0, scale: 0.8 }}
-                
                 whileInView={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 key={ind}
