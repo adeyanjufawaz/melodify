@@ -6,7 +6,6 @@ import "../../globals.css";
 import Image from "next/image";
 import useLocalStorage from "@/app/hooks/localStorage";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 export default function UserPage() {
   const { artistDetails } = useParams<{ artistDetails: string }>();
@@ -21,9 +20,6 @@ export default function UserPage() {
 
   const [artistTracks, setArtisitTracks] = useState([]);
   const [artistTracksIsLoading, setartistTracksIsLoading] = useState(true);
-
-  const [relatedArtists, setRelatedArtists] = useState([]);
-  const [relatedArtistsIsLoading, setrelatedArtistsIsLoading] = useState(true);
 
   useEffect(() => {
     // 1. Get Artist Info
@@ -65,24 +61,9 @@ export default function UserPage() {
     getArtistTracks();
 
     // 3. Get similar artist
-    const getReltedArtist = async () => {
-      await fetch(
-        `https://api.spotify.com/v1/artists/${artistDetails}/related-artists`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setrelatedArtistsIsLoading(false);
-        });
-    };
-    getReltedArtist();
   }, []);
 
-  if (artistInfoIsLoading || artistTracksIsLoading || relatedArtistsIsLoading) {
+  if (artistInfoIsLoading || artistTracksIsLoading) {
     return (
       <div className="mt-20 animate-pulse min-h-[70vh] flex justify-center items-center">
         <h2>Loading....</h2>
